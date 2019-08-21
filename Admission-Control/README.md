@@ -12,6 +12,7 @@ The webhooks are hosted using [Cloud Run](https://cloud.google.com/run/) on GCP.
 
 An Ingress object in Kubernetes may expose unnecessary external IP addresses to the internet. This can lead to unexpected compromise.
 
+
 First, inspect the `ValidatingWebhookConfiguration` located at `deny-ingress/webhook-config.yaml`. You will see that we are using an open API endpoint hosted on Cloud Run to inspect the request.
 
 Create the `ValidatingWebhookConfiguration` object:
@@ -47,6 +48,12 @@ Due to the rules built in the [DenyPublicLoadBalancers](https://github.com/elith
 Successfully enforce one of the other [AdmitFuncs](https://github.com/elithrar/admission-control/blob/master/admit_funcs.go) using the API endpoint that is already running in Cloud Run.
 
 Hint: You will need to modify the `webhook-config.yaml` file.
+
+## Clean up
+```
+kubectl delete -f deny-ingress
+kubectl delete -f deny-public-lb
+```
 
 ## Shout Out
 Shout out to the `Admission Control` repo from `elithrar`. Check it out on GitHub if you are looking for a robust framework for spinning up Admission Control in your clusters.
